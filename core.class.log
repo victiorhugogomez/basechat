@@ -1,0 +1,39 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB061CCFC58DB47C49B53',
+    participant: undefined
+  },
+  messageTimestamp: 1728442919,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'hola',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'hola',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_3c4a6188-b00b-409c-bd5a-7dd9c69476f4',
+  keyword: 'key_1e267b96-8c4f-455b-b8ef-3b6c8b1a4d82',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'cc04df8e90ebf03100e13e1cf732336a'
+}

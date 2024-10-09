@@ -10,18 +10,22 @@
     },
     "keywords": [],
     "dependencies": {
-        "@bot-whatsapp/bot": "latest",
-        "@bot-whatsapp/cli": "latest",
-        "@bot-whatsapp/database": "latest",
-        "@bot-whatsapp/provider": "latest",
-        "@bot-whatsapp/portal": "latest",
+        "@bot-whatsapp/bot": "0.1.38",
+        "@bot-whatsapp/cli": "0.1.38",
+        "@bot-whatsapp/database": "0.1.38",
+        "@bot-whatsapp/portal": "0.1.38",
+        "@bot-whatsapp/provider": "0.1.38",
         "@whiskeysockets/baileys": "6.5.0",
-        "wa-sticker-formatter": "4.4.4",
-        "cache-manager": "5.2.4"
+        "cache-manager": "5.2.4",
+        "date-fns": "^3.6.0",
+        "googleapis": "^137.1.0",
+        "luxon": "^3.4.4",
+        "openai": "^4.47.1",
+        "wa-sticker-formatter": "4.4.4"
     },
     "devDependencies": {
-        "eslint-plugin-bot-whatsapp": "latest",
-        "eslint": "^8.52.0"
+        "eslint": "^8.52.0",
+        "eslint-plugin-bot-whatsapp": "1.0.0"
     },
     "author": "",
     "license": "ISC"
