@@ -21,7 +21,7 @@ const agregarCorreo = addKeyword(EVENTS.ACTION)
         if(ctx.body==="1"){
             // correo = 'a@a.com'
             console.log("opcion uno");            
-            return await ctxFn.gotoFlow(agregarContacto)/
+            return await ctxFn.gotoFlow(agregarContacto)
         }else{       
             if (validarCorreo(ctx.body)) {
                 correo = ctx.body;
