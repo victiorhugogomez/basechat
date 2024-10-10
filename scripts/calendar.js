@@ -1,4 +1,45 @@
 const { google } = require('googleapis');
+const fs = require('fs');
+const path = require('path');
+
+// Función para cargar la configuración desde config.json en cada operación
+function loadConfig() {
+    const configPath = path.join(__dirname, '..', 'config.json');
+    let config;
+    
+    try {
+        const configData = fs.readFileSync(configPath, 'utf-8');  // Leer el archivo JSON
+        config = JSON.parse(configData);  // Convertir el JSON a objeto
+
+        // Verificar que todos los valores requeridos estén presentes
+        const requiredFields = ['rangeLimit', 'standardDuration', 'timeZone', 'calendarID', 'dateLimit'];
+        requiredFields.forEach(field => {
+            if (!config[field]) {
+                throw new Error(`Falta el valor requerido: ${field} en config.json`);
+            }
+        });
+
+        // Verificar que rangeLimit tenga las claves necesarias
+        if (!config.rangeLimit.days || !config.rangeLimit.startHour || !config.rangeLimit.endHour) {
+            throw new Error('Faltan valores en rangeLimit en config.json');
+        }
+    } catch (err) {
+        console.error('Error al cargar el archivo config.json:', err);
+
+        // Configuración por defecto si no se puede cargar el archivo o si faltan valores
+        config = {
+            rangeLimit: { days: [1, 2, 3, 4, 5], startHour: 9, endHour: 18 },
+            standardDuration: 0.25,
+            timeZone: 'America/Mexico_City',
+            calendarID: '447290a939b1187df79c01c644393dfcfc343a77cb5361acb359af631447002c@group.calendar.google.com',
+            dateLimit: 10
+        };
+        console.log('Usando configuración por defecto:', config);
+    }
+
+    return config;
+}
+
 
 // Inicializa la librería cliente de Google y configura la autenticación con credenciales de la cuenta de servicio.
 const auth = new google.auth.GoogleAuth({
@@ -8,36 +49,18 @@ const auth = new google.auth.GoogleAuth({
 
 const calendar = google.calendar({ version: "v3" });
 
-// Constantes configurables
-const calendarID = '447290a939b1187df79c01c644393dfcfc343a77cb5361acb359af631447002c@group.calendar.google.com';
-const timeZone = 'America/Mexico_City';
-//'Europe/London';
-// Ejemplos de zonas horarias:
-// UTC: 'Etc/UTC'
-// Argentina: America/Argentina/Buenos_Aires'
-// Colombia: 'America/Bogota'
-// México: 'America/Mexico_City'
-// Perú: 'America/Lima'
-// Uruguay: 'America/Montevideo'
-// El Salvador: 'America/El_Salvador'
-
-const rangeLimit = {
-    days: [1, 2, 3, 4, 5], // Lunes a Viernes
-    startHour: 9,
-    endHour: 18
-};
-const standardDuration = .25; // Duración por defecto de las citas (1 hora)
-const dateLimit = 10; // Maximo de dias a traer la lista de Next Events
-
 /**
  * Crea un evento en el calendario.
  * @param {string} eventName - Nombre del evento.
  * @param {string} description - Descripción del evento.
  * @param {string} date - Fecha y hora de inicio del evento en formato ISO (e.g., '2024-06-01T10:00:00-07:00').
- * @param {number} [duration=standardDuration] - Duración del evento en horas. Default es 1 hora.
+ * @param {number} [duration] - Duración del evento en horas. Default es 1 hora.
  * @returns {string} - URL de la invitación al evento.
  */
-async function createEvent(eventName, description, date, duration = standardDuration) {
+async function createEvent(eventName, description, date, duration) {
+    const { calendarID, timeZone, standardDuration } = loadConfig();
+    duration = duration || standardDuration;
+
     try {
         // Autenticación
         const authClient = await auth.getClient();
@@ -47,12 +70,8 @@ async function createEvent(eventName, description, date, duration = standardDura
         const startDateTime = new Date(date);
         // Fecha y hora de fin del evento
         const endDateTime = new Date(startDateTime);
-        // endDateTime.setHours(startDateTime.getHours() + duration);
-        endDateTime.setMinutes(startDateTime.getMinutes() + standardDuration * 60);
-        // const slotEnd = new Date(startDateTime);
-        // slotEnd.setMinutes(startDateTime.getMinutes() + standardDuration * 60);
-        // console.log('end date time: ',endDateTime)
-        // console.log('slot end: ', slotEnd)
+        endDateTime.setMinutes(startDateTime.getMinutes() + (duration * 60));
+
         const event = {
             summary: eventName,
             description: description,
@@ -66,13 +85,12 @@ async function createEvent(eventName, description, date, duration = standardDura
             },
             colorId: '2' // El ID del color verde en Google Calendar es '11'
         };
-         console.log('event to create: ',event)
+
         const response = await calendar.events.insert({
             calendarId: calendarID,
             resource: event,
         });
 
-        // Generar la URL de la invitación
         const eventId = response.data.id;
         console.log('Evento creado con éxito');
         return eventId;
@@ -82,22 +100,16 @@ async function createEvent(eventName, description, date, duration = standardDura
     }
 }
 
+// Función para obtener los próximos eventos
+async function getNextEvents(dateLimit) {
+    const { calendarID, timeZone } = loadConfig();
+    dateLimit = dateLimit || loadConfig().dateLimit;
 
-// Función para obtener los eventos dentro del rango especificado por dateLimit
-/**
- * Obtiene los próximos eventos dentro del rango especificado por dateLimit.
- * @param {number} [dateLimit=dateLimit] - Máximo de días en adelante para buscar eventos. Default es el valor de la constante dateLimit.
- * @returns {Array} - Lista de eventos dentro del rango especificado.
- */
-async function getNextEvents(dateLimit = dateLimit) {
     try {
-        // Autenticación
         const authClient = await auth.getClient();
         google.options({ auth: authClient });
 
-        // Fecha de inicio (ahora)
         const now = new Date();
-        // Fecha de fin (ahora + dateLimit días)
         const endDate = new Date(now);
         endDate.setDate(now.getDate() + dateLimit);
 
@@ -111,12 +123,7 @@ async function getNextEvents(dateLimit = dateLimit) {
         });
 
         const events = response.data.items;
-        if (events.length) {
-            events.forEach((event, i) => {
-                const start = event.start.dateTime || event.start.date;
-            });
-        }
-        return events;
+        return events || [];
     } catch (err) {
         console.error('Hubo un error al contactar el servicio de Calendar: ' + err);
         throw err;
@@ -130,10 +137,19 @@ async function getNextEvents(dateLimit = dateLimit) {
  * @returns {Array} - Lista de slots disponibles.
  */
 async function listAvailableSlots(startDate = new Date(), endDate) {
+    const { calendarID, timeZone, rangeLimit, standardDuration, dateLimit } = loadConfig();
+    console.log('valores//////////////////////////////////////////////////')
+    console.log(calendarID)
+    console.log(timeZone)
+    console.log(rangeLimit)
+    console.log(standardDuration)
+    console.log(dateLimit)
+// console.log()
     try {
         const authClient = await auth.getClient();
         google.options({ auth: authClient });
-
+        console.log('endDate',endDate)
+        console.log('dateLimit',dateLimit)
         // Definir fecha de fin si no se proporciona de todo el rango de fechas en este caso se usa el maximo de dias 
         if (!endDate) {
             endDate = new Date(startDate);
@@ -159,10 +175,6 @@ async function listAvailableSlots(startDate = new Date(), endDate) {
         const slots = [];
         let currentDate = new Date(startDate);
 
-        // Generar slots disponibles basados en rangeLimit
-        //corregir logica, actualmente te da los slots completos independientemente de la duracion de las citas
-        //si una cita no empieza a la hora exacta lo marca como slot disponible 
-        //si un slot no esta ocupado completamente los encima 
         while (currentDate < endDate) {
             const dayOfWeek = currentDate.getDay();
             if (rangeLimit.days.includes(dayOfWeek)) {
@@ -174,7 +186,6 @@ async function listAvailableSlots(startDate = new Date(), endDate) {
                         slotEnd.setMinutes(slotStart.getMinutes() + standardDuration * 60);
 
                         const isBusy = events.some(event => {
-                            console.log('event : ',event)
                             const eventStart = new Date(event.start.dateTime || event.start.date);
                             const eventEnd = new Date(event.end.dateTime || event.end.date);
                             return (slotStart < eventEnd && slotEnd > eventStart);
@@ -188,30 +199,6 @@ async function listAvailableSlots(startDate = new Date(), endDate) {
             }
             currentDate.setDate(currentDate.getDate() + 1);
         }
-        
-        // while (currentDate < endDate) {
-        //     const dayOfWeek = currentDate.getDay();
-        //     if (rangeLimit.days.includes(dayOfWeek)) {
-        //         for (let hour = rangeLimit.startHour; hour < rangeLimit.endHour; hour++) {
-        //             const slotStart = new Date(currentDate);
-        //             slotStart.setHours(hour, 0, 0, 0);
-        //             const slotEnd = new Date(slotStart);
-        //             slotEnd.setHours(hour + standardDuration);
-
-        //             const isBusy = events.some(event => {
-        //                 const eventStart = new Date(event.start.dateTime || event.start.date);
-        //                 const eventEnd = new Date(event.end.dateTime || event.end.date);
-        //                 return (slotStart < eventEnd && slotEnd > eventStart);
-        //             });
-
-        //             if (!isBusy) {
-        //                 slots.push({ start: slotStart, end: slotEnd });
-        //             }
-        //         }
-        //     }
-        //     currentDate.setDate(currentDate.getDate() + 1);
-        // }
-
         return slots;
     } catch (err) {
         console.error('Hubo un error al contactar el servicio de Calendar: ' + err);
@@ -219,53 +206,46 @@ async function listAvailableSlots(startDate = new Date(), endDate) {
     }
 }
 
+
+
 /**
  * Verifica si hay slots disponibles para una fecha dada.
  * @param {Date} date - Fecha a verificar.
  * @returns {boolean} - Devuelve true si hay slots disponibles dentro del rango permitido, false en caso contrario.
  */
 async function isDateAvailable(date) {
+    const { rangeLimit, standardDuration, dateLimit } = loadConfig();
     try {
-        // Validar que la fecha esté dentro del rango permitido
         const currentDate = new Date();
         const maxDate = new Date(currentDate);
         maxDate.setDate(currentDate.getDate() + dateLimit);
 
         if (date < currentDate || date > maxDate) {
-            return false; // La fecha está fuera del rango permitido
+            return false;
         }
 
-        // Verificar que la fecha caiga en un día permitido
         const dayOfWeek = date.getDay();
         if (!rangeLimit.days.includes(dayOfWeek)) {
-            return false; // La fecha no está dentro de los días permitidos
+            return false;
         }
 
-        // Verificar que la hora esté dentro del rango permitido
         const hour = date.getHours();
         if (hour < rangeLimit.startHour || hour >= rangeLimit.endHour) {
-            return false; // La hora no está dentro del rango permitido
+            return false;
         }
 
-        // Obtener todos los slots disponibles desde la fecha actual hasta el límite definido
         const availableSlots = await listAvailableSlots(currentDate);
-
-        // Filtrar slots disponibles basados en la fecha dada
         const slotsOnGivenDate = availableSlots.filter(slot => new Date(slot.start).toDateString() === date.toDateString());
 
-        // Verificar si hay slots disponibles en la fecha dada
-        const isSlotAvailable = slotsOnGivenDate.some(slot =>
+        return slotsOnGivenDate.some(slot =>
             new Date(slot.start).getTime() === date.getTime() &&
-            new Date(slot.end).getTime() === date.getTime() + standardDuration * 60 * 60 * 1000
+            new Date(slot.end).getTime() === date.getTime() + (standardDuration * 60 * 60 * 1000)
         );
-
-        return isSlotAvailable;
     } catch (err) {
         console.error('Hubo un error al verificar disponibilidad de la fecha: ' + err);
         throw err;
     }
 }
-
 
 /**
  * Obtiene el próximo slot disponible a partir de la fecha dada.
@@ -274,27 +254,25 @@ async function isDateAvailable(date) {
  */
 async function getNextAvailableSlot(date) {
     try {
-        // Verificar si 'date' es un string en formato ISO
         if (typeof date === 'string') {
-            // Convertir el string ISO en un objeto Date
             date = new Date(date);
         } else if (!(date instanceof Date) || isNaN(date)) {
             throw new Error('La fecha proporcionada no es válida.');
         }
         
+        
+        // Obtener el próximo slot disponible
+
         // Obtener el próximo slot disponible
         const availableSlots = await listAvailableSlots(date);
-        // Filtrar slots disponibles que comienzan después de la fecha proporcionada
         const filteredSlots = availableSlots.filter(slot => new Date(slot.start) > date);
-        // Ordenar los slots por su hora de inicio en orden ascendente
         const sortedSlots = filteredSlots.sort((a, b) => new Date(a.start) - new Date(b.start));
-        // Tomar el primer slot de la lista resultante, que será el próximo slot disponible más cercano
+
         return sortedSlots.length > 0 ? sortedSlots[0] : null;
     } catch (err) {
         console.error('Hubo un error al obtener el próximo slot disponible: ' + err);
         throw err;
     }
 }
-
 
 module.exports = { createEvent, isDateAvailable, getNextAvailableSlot };

@@ -2,10 +2,10 @@
   key: {
     remoteJid: '5213314482419@s.whatsapp.net',
     fromMe: false,
-    id: '3EB061CCFC58DB47C49B53',
+    id: '3EB00F4A681B0449CFD5D2',
     participant: undefined
   },
-  messageTimestamp: 1728442919,
+  messageTimestamp: 1728536412,
   pushName: 'Korsakov',
   broadcast: false,
   message: Message {
@@ -20,8 +20,8 @@
   from: '5213314482419'
 }
 [QUEUE_SE_ENVIO]:  {
-  ref: 'ans_3c4a6188-b00b-409c-bd5a-7dd9c69476f4',
-  keyword: 'key_1e267b96-8c4f-455b-b8ef-3b6c8b1a4d82',
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
   answer: '__call_action__',
   options: {
     media: null,
@@ -35,5 +35,1148 @@
     keyword: {},
     callback: true
   },
-  refSerialize: 'cc04df8e90ebf03100e13e1cf732336a'
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB072F9065F01BFB862FB',
+    participant: undefined
+  },
+  messageTimestamp: 1728536417,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0FF979E2EC854CA49E7',
+    participant: undefined
+  },
+  messageTimestamp: 1728536431,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB04D7E14D2D97C1BD8C6',
+    participant: undefined
+  },
+  messageTimestamp: 1728536435,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'no',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'no',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0C86CFE1015896D41A0',
+    participant: undefined
+  },
+  messageTimestamp: 1728536441,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A26317477ECC60E2BE',
+    participant: undefined
+  },
+  messageTimestamp: 1728536460,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0490F7B0812634621F7',
+    participant: undefined
+  },
+  messageTimestamp: 1728536467,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'no',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'no',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EB1125D5BB7D0A726D',
+    participant: undefined
+  },
+  messageTimestamp: 1728536471,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0655AC77BA9EC7A9E0E',
+    participant: undefined
+  },
+  messageTimestamp: 1728536475,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '2',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '2',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0ECB09B6245890A1DA9',
+    participant: undefined
+  },
+  messageTimestamp: 1728536511,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '11/10/2024',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '11/10/2024',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_01922a6e-be0c-4ba2-bcdc-388c06ccfb88',
+  keyword: 'ans_7732757f-2867-4034-85fa-61d5ac398bd4',
+  answer: 'Esperando la respuesta de mañana o tarde...',
+  options: {
+    media: null,
+    buttons: [],
+    capture: true,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'fa2871d9611cae61e417990dde72f8b3'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EBFF844FBAC76B0055',
+    participant: undefined
+  },
+  messageTimestamp: 1728536516,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'tarde',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'tarde',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB02DD47048EAB9559CE8',
+    participant: undefined
+  },
+  messageTimestamp: 1728536532,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'si',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'si',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03FE26C48B6EA3AE40A',
+    participant: undefined
+  },
+  messageTimestamp: 1728536538,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'm',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'm',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  keyword: 'ans_e082ee47-25cc-4691-95f3-59cae88dd73d',
+  answer: 'Perfecto, ¿Cual es el motivo del turno?',
+  options: {
+    media: null,
+    buttons: [],
+    capture: true,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '12d770eddaea53b415ca11ba5705d30f'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A66AAAD7DB99885D0D',
+    participant: undefined
+  },
+  messageTimestamp: 1728536540,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'm',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'm',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_d1ee71c8-953f-40b7-86f8-0d4ad8c76657',
+  keyword: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  answer: 'Excelente! Ya cree la reunión. Te esperamos!',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'c088335d7f1275de07e035f3b1609343'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB01A5D66B446AD94E760',
+    participant: undefined
+  },
+  messageTimestamp: 1728536596,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'hola',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'hola',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0176398569E56717063',
+    participant: undefined
+  },
+  messageTimestamp: 1728536600,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E188B4759DA576DEBC',
+    participant: undefined
+  },
+  messageTimestamp: 1728536609,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB080E7B1A5E3CB8543FE',
+    participant: undefined
+  },
+  messageTimestamp: 1728536618,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'no',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'no',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB010B9C10AEF3F499033',
+    participant: undefined
+  },
+  messageTimestamp: 1728536622,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB08FB85335AEF775E945',
+    participant: undefined
+  },
+  messageTimestamp: 1728536634,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F1EE09FA74D4921A82',
+    participant: undefined
+  },
+  messageTimestamp: 1728536639,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'ai',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'ai',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E91B28E6CE829246F7',
+    participant: undefined
+  },
+  messageTimestamp: 1728536645,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB034D8ACABBAA1269696',
+    participant: undefined
+  },
+  messageTimestamp: 1728536648,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F8C9E94BA9C89F291C',
+    participant: undefined
+  },
+  messageTimestamp: 1728536651,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'si',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'si',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB092E49F442522A77E04',
+    participant: undefined
+  },
+  messageTimestamp: 1728536657,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'l',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'l',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  keyword: 'ans_e082ee47-25cc-4691-95f3-59cae88dd73d',
+  answer: 'Perfecto, ¿Cual es el motivo del turno?',
+  options: {
+    media: null,
+    buttons: [],
+    capture: true,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '12d770eddaea53b415ca11ba5705d30f'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB05D589C03A7A56B92B6',
+    participant: undefined
+  },
+  messageTimestamp: 1728536658,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'l',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'l',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_d1ee71c8-953f-40b7-86f8-0d4ad8c76657',
+  keyword: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  answer: 'Excelente! Ya cree la reunión. Te esperamos!',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'c088335d7f1275de07e035f3b1609343'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03C98EBBC5D47FCA518',
+    participant: undefined
+  },
+  messageTimestamp: 1728536675,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB07D02507FC1B9705849',
+    participant: undefined
+  },
+  messageTimestamp: 1728536679,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0C0954409932D65EE8C',
+    participant: undefined
+  },
+  messageTimestamp: 1728536682,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'no',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'no',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB06A7E1E1A38302853CB',
+    participant: undefined
+  },
+  messageTimestamp: 1728536693,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EF932AF889EAA97230',
+    participant: undefined
+  },
+  messageTimestamp: 1728536710,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '1',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0FEB746B718B00C3FB8',
+    participant: undefined
+  },
+  messageTimestamp: 1728536715,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'no',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'no',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0851C472F90649F79EB',
+    participant: undefined
+  },
+  messageTimestamp: 1728536719,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'agendar cita',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'agendar cita',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_ee634d5c-357b-487d-a6ea-a3a247ed9fba',
+  keyword: 'key_a2f5cf4b-023f-4490-9d79-c0a791706c33',
+  answer: '__call_action__',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '1c0fd6653dfe1145aae27409830d8284'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F2E16F5DB7A2868C1B',
+    participant: undefined
+  },
+  messageTimestamp: 1728536721,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '2',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '2',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03690946285AA14C80D',
+    participant: undefined
+  },
+  messageTimestamp: 1728536746,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: '10/10/2024',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: '10/10/2024',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_01922a6e-be0c-4ba2-bcdc-388c06ccfb88',
+  keyword: 'ans_7732757f-2867-4034-85fa-61d5ac398bd4',
+  answer: 'Esperando la respuesta de mañana o tarde...',
+  options: {
+    media: null,
+    buttons: [],
+    capture: true,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'fa2871d9611cae61e417990dde72f8b3'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0B628A3E12F6ED86A18',
+    participant: undefined
+  },
+  messageTimestamp: 1728536749,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'ma;ana',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'ma;ana',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03941D7D93BC39BDB44',
+    participant: undefined
+  },
+  messageTimestamp: 1728536753,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'tarde',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'tarde',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A23C4CD5F3400A9F5F',
+    participant: undefined
+  },
+  messageTimestamp: 1728536765,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'si',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'si',
+  from: '5213314482419'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0195D98CF1B419D02EA',
+    participant: undefined
+  },
+  messageTimestamp: 1728536768,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'k',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'k',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  keyword: 'ans_e082ee47-25cc-4691-95f3-59cae88dd73d',
+  answer: 'Perfecto, ¿Cual es el motivo del turno?',
+  options: {
+    media: null,
+    buttons: [],
+    capture: true,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: '12d770eddaea53b415ca11ba5705d30f'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5213314482419@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB06FBB554FB65B1AC9F3',
+    participant: undefined
+  },
+  messageTimestamp: 1728536769,
+  pushName: 'Korsakov',
+  broadcast: false,
+  message: Message {
+    conversation: 'k',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2,
+      messageSecret: [Uint8Array]
+    }
+  },
+  body: 'k',
+  from: '5213314482419'
+}
+[QUEUE_SE_ENVIO]:  {
+  ref: 'ans_d1ee71c8-953f-40b7-86f8-0d4ad8c76657',
+  keyword: 'ans_8f634f1f-fdb8-4b61-abf2-c822507c1d38',
+  answer: 'Excelente! Ya cree la reunión. Te esperamos!',
+  options: {
+    media: null,
+    buttons: [],
+    capture: false,
+    child: null,
+    delay: 0,
+    idle: null,
+    ref: null,
+    nested: [],
+    keyword: {},
+    callback: true
+  },
+  refSerialize: 'c088335d7f1275de07e035f3b1609343'
 }

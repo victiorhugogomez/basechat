@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Citas</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;  /* Ajuste del tamaño de letra */
+        }
+
+        h2 {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Imagen del QR */
+        #qrImage {
+            margin-top: 20px;
+            border: 5px solid #ddd;
+            border-radius: 10px;
+        }
+
+        /* Estilos del formulario */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para pantallas pequeñas (móviles) */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem; /* Ajuste del tamaño de letra para móviles */
+            }
+
+            form {
+                padding: 15px;
+            }
+
+            input[type="number"], button {
+                font-size: 1rem;
+            }
+        }
+
+        /* Estilos para pantallas grandes (escritorio) */
+        @media screen and (min-width: 769px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            form {
+                width: 50%;
+            }
+
+            #qrImage {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mostrar la imagen del QR -->
+        <div>
+            <h2>Escanea el código QR del bot:</h2>
+            <img id="qrImage" src="/bot-qr" alt="Código QR del Bot" width="200" height="200">
+        </div>
+
+        <form id="configForm">
+            <h1>Configurar Horarios y Duración de Citas</h1>
+
+            <label for="days">Selecciona los días de la semana que trabajas:</label>
+            <label><input type="checkbox" name="days" value="1"> Lunes</label>
+            <label><input type="checkbox" name="days" value="2"> Martes</label>
+            <label><input type="checkbox" name="days" value="3"> Miércoles</label>
+            <label><input type="checkbox" name="days" value="4"> Jueves</label>
+            <label><input type="checkbox" name="days" value="5"> Viernes</label>
+            <label><input type="checkbox" name="days" value="6"> Sábado</label>
+            <label><input type="checkbox" name="days" value="0"> Domingo</label>
+
+            <label for="startHour">Hora de Inicio:</label>
+            <input type="number" id="startHour" name="startHour" value="9" required>
+
+            <label for="endHour">Hora de Fin:</label>
+            <input type="number" id="endHour" name="endHour" value="18" required>
+
+            <label for="standardDuration">Duración de Citas (en minutos):</label>
+            <input type="number" id="standardDuration" name="standardDuration" value="15" step="5" required>
+
+            <button type="submit">Guardar Configuración</button>
+        </form>
+    </div>
+
+    <script>
+        // Recargar la imagen del QR cada 30 segundos
+        setInterval(() => {
+            document.getElementById('qrImage').src = '/bot-qr?' + new Date().getTime();
+        }, 30000);  // Recargar cada 30 segundos
+
+        // Cargar la configuración desde el backend y seleccionar los días en el formulario
+        async function loadConfig() {
+            try {
+                const response = await fetch('/get-config');
+                const config = await response.json();
+                console.log('Configuración cargada:', config);
+
+                // Marcar los días que están almacenados en config.json
+                const days = config.rangeLimit.days;
+                days.forEach(day => {
+                    const checkbox = document.querySelector(`input[name="days"][value="${day}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+
+                // Cargar la hora de inicio, fin y duración de citas
+                document.getElementById('startHour').value = config.rangeLimit.startHour;
+                document.getElementById('endHour').value = config.rangeLimit.endHour;
+                document.getElementById('standardDuration').value = config.standardDuration * 60;  // Convertir a minutos
+            } catch (err) {
+                console.error('Error al cargar la configuración:', err);
+            }
+        }
+
+        // Cargar la configuración cuando la página se carga
+        window.onload = loadConfig;
+
+        // Manejar el formulario y enviar los datos actualizados
+        document.getElementById('configForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Obtener los días seleccionados
+            const days = Array.from(document.querySelectorAll('input[name="days"]:checked')).map(cb => Number(cb.value));
+
+            // Obtener los otros valores
+            const startHour = Number(document.getElementById('startHour').value);
+            const endHour = Number(document.getElementById('endHour').value);
+            const standardDuration = Number(document.getElementById('standardDuration').value);  // Duración en minutos
+
+            const configData = { 
+                rangeLimit: { days, startHour, endHour }, 
+                standardDuration 
+            };
+
+            console.log('Datos enviados:', configData);  // Verificar en consola
+
+            try {
+                const response = await fetch('/save-config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(configData)
+                });
+
+                if (response.ok) {
+                    alert('Configuración guardada exitosamente');
+                    console.log('Respuesta del servidor:', await response.text());  // Mostrar respuesta del servidor
+                } else {
+                    alert('Error al guardar la configuración');
+                    console.error('Error:', response.statusText);
+                }
+            } catch (err) {
+                console.error('Error en la solicitud:', err);
+            }
+        });
+    </script>
+</body>
+</html>

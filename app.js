@@ -1,9 +1,87 @@
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Configurar una ruta para servir "Hola Mundo"
+
 const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot')
 const GooglePeopleAPI = require('./scripts/GooglePeopleAPI'); 
-const QRPortalWeb = require('@bot-whatsapp/portal')
+// const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 
+app.use(express.json());  // Middleware para manejar JSON
+app.use(express.static(path.join(__dirname, 'public')));  // Servir archivos estáticos desde la carpeta public
+
+// Cargar los valores desde config.json al iniciar la aplicación
+let config = {
+    rangeLimit: { days: [1, 2, 3, 4, 5], startHour: 9, endHour: 18 },
+    standardDuration: 0.25
+};
+
+if (fs.existsSync('./config.json')) {
+    config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+}
+app.get('/bot-qr', (req, res) => {
+    const qrPath = path.join(__dirname, 'bot.qr.png');  // Ubicación del archivo QR
+    res.sendFile(qrPath);
+});
+app.get('/get-config', (req, res) => {
+    const configPath = path.join(__dirname, 'config.json');
+    try {
+        const configData = fs.readFileSync(configPath, 'utf-8');
+        const config = JSON.parse(configData);
+        res.json(config);  // Enviar la configuración al frontend
+    } catch (err) {
+        console.error('Error al cargar el archivo config.json:', err);
+        res.status(500).json({ error: 'No se pudo cargar config.json' });
+    }
+});
+// Ruta para manejar la recepción de la configuración desde el formulario
+app.post('/save-config', (req, res) => {
+    try {
+        const newConfig = req.body;
+
+        console.log('Configuración recibida:', newConfig);
+
+        // Convertir la duración de citas de minutos a horas
+        newConfig.standardDuration = newConfig.standardDuration / 60;
+
+        // Leer el archivo config.json existente
+        const configPath = './config.json';
+        let existingConfig = {};
+
+        if (fs.existsSync(configPath)) {
+            const configData = fs.readFileSync(configPath, 'utf-8');
+            existingConfig = JSON.parse(configData);
+        }
+
+        // Fusionar la nueva configuración con la existente
+        const updatedConfig = {
+            ...existingConfig,  // Mantener los campos existentes
+            rangeLimit: { 
+                ...existingConfig.rangeLimit,  // Mantener el rango existente y sobreescribir solo días, horas, etc.
+                ...newConfig.rangeLimit
+            },
+            standardDuration: newConfig.standardDuration
+        };
+
+        // Guardar la configuración fusionada en config.json
+        fs.writeFileSync(configPath, JSON.stringify(updatedConfig, null, 2));
+
+        // Actualizar la variable config en memoria
+        config = updatedConfig;
+
+        res.send('<h1>Configuración guardada con éxito</h1><a href="/">Volver</a>');
+    } catch (err) {
+        console.error('Error al procesar la solicitud:', err);
+        res.status(500).send('Error al guardar la configuración');
+    }
+});
+
+// --- Lógica del bot WhatsApp ---
 
 const peopleAPI = new GooglePeopleAPI('../google.json', [
     'https://www.googleapis.com/auth/contacts.readonly',
@@ -86,8 +164,8 @@ const main = async () => {
         provider: adapterProvider,
         database: adapterDB,
     })
-
-    QRPortalWeb()
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    // QRPortalWeb()
 }
-
-main()
+app.listen(PORT, () => main());
+// main()

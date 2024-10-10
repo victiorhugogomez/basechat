@@ -1,0 +1,15 @@
+{
+  "rangeLimit": {
+    "days": [
+      1,
+      2,
+      5
+    ],
+    "startHour": 9,
+    "endHour": 18
+  },
+  "standardDuration": 0.25,
+  "timeZone": "America/Mexico_City",
+  "calendarID": "447290a939b1187df79c01c644393dfcfc343a77cb5361acb359af631447002c@group.calendar.google.com",
+  "dateLimit": 10
+}
