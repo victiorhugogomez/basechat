@@ -2,6 +2,7 @@ const { addKeyword, EVENTS } = require("@bot-whatsapp/bot");
 const { text2iso, iso2text,convertToDate,isAfternoon,isMorning,isValidDate,isFutureDate,validarCorreo,clientName } = require("../scripts/utils")
 const { formFlow } = require("./form.flow")
 const {welcomeFlow}= require ("./welcome.flow")
+const { userMemory } = require('../scripts/userMemory.js');
 const GooglePeopleAPI = require('../scripts/GooglePeopleAPI'); 
 let nombre=''
 let correo=''
@@ -20,7 +21,7 @@ const agregarCorreo = addKeyword(EVENTS.ACTION)
         if(ctx.body==="1"){
             // correo = 'a@a.com'
             console.log("opcion uno");            
-            return await ctxFn.gotoFlow(agregarContacto)// cambiar el flow PARA IR AL WELCOME FLOW
+            return await ctxFn.gotoFlow(agregarContacto)
         }else{       
             if (validarCorreo(ctx.body)) {
                 correo = ctx.body;
@@ -42,6 +43,7 @@ const agregarContacto = addKeyword(EVENTS.ACTION)
     
         // Después de registrar, damos la bienvenida
         await ctxFn.flowDynamic(`¡Gracias, ${nombre}! Has sido registrado correctamente.`);
+        userMemory[telefono] = nombre;
     
         // Luego, lo redirigimos al flujo de bienvenida (simple saludo)
         return await ctxFn.gotoFlow(welcomeFlow);

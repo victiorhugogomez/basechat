@@ -2,7 +2,7 @@ const { addKeyword, EVENTS } = require("@bot-whatsapp/bot");
 const { createEvent } = require("../scripts/calendar")
 
 const formFlow = addKeyword(EVENTS.ACTION)
-    .addAnswer("Excelente! Gracias por confimar la fecha. Te voy a hacer unas consultas para agendar el turno. Primero ¿Cuál es tu nombre?", { capture: true },
+    .addAnswer("Excelente! Gracias por confimar la fecha. Te voy a hacer unas consultas para agendar el turno. Primero ¿A que nombre quedaria la cita?", { capture: true },
         async (ctx, ctxFn) => {
             await ctxFn.state.update({ name: ctx.body }); // Guarda el nombre del usuario en el estado
         }
