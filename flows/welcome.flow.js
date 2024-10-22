@@ -6,7 +6,7 @@ const welcomeFlow = addKeyword(EVENTS.ACTION)
         const phoneNumber = ctx.from.substring(3);  // Número de teléfono del usuario
         const userName = userMemory[phoneNumber] || 'Usuario';  // Recuperar el nombre si está disponible
 
-        await ctxFn.endFlow(`Hola ${userName}! Puedes escribir 'Agendar cita' para reservar una cita.`);
+        await ctxFn.endFlow(`Hola ${userName}! Puedes escribir *'Citas'* para reservar una cita.`);
     })
 
 module.exports = { welcomeFlow };
