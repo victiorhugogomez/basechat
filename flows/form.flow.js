@@ -10,17 +10,28 @@ const formFlow = addKeyword(EVENTS.ACTION)
     .addAnswer("Perfecto, ¿Cual es el motivo del turno?", { capture: true },
         async (ctx, ctxFn) => {
             await ctxFn.state.update({ motive: ctx.body }); // Guarda el motivo en el estado
-        }
-    )
-    .addAnswer("Excelente! Ya cree la reunión. Te esperamos!", null,
-        async (ctx, ctxFn) => {
             const userInfo = await ctxFn.state.getMyState();
-            const eventName = userInfo.name;
-            const description = userInfo.motive;
-            const date = userInfo.date;
-            const eventId = await createEvent(eventName, description, date)
-            await ctxFn.state.clear();
+                const phoneNumber = ctx.from.substring(3);
+                const eventName = userInfo.name;
+                const description = `${userInfo.motive} - Teléfono: ${phoneNumber}`;
+                const date = userInfo.date; 
+                console.log('user Info///////////////', userInfo)  
+                if (!(date instanceof Date)) {
+                    // Intentar convertir el valor de 'date' a un objeto Date
+                    date = new Date(date);
+                }
+        
+                // Validar si la fecha es válida
+                if (isNaN(date.getTime())) {
+                    // Si la fecha no es válida, finalizar el flujo con un mensaje de error
+                    return ctxFn.endFlow("Error: La fecha proporcionada no es válida.");
+                }      
+                const eventId = await createEvent(eventName, description, date,null, phoneNumber);
+                await ctxFn.state.clear();
+                return ctxFn.gotoFlow(confirmation)
         }
     )
+    const confirmation = addKeyword(EVENTS.ACTION)
+    .addAnswer("Excelente! Ya cree la reunión. Te esperamos!")
 
-module.exports = { formFlow };
+module.exports = { formFlow,confirmation };

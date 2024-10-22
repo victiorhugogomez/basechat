@@ -20,7 +20,7 @@
 
         h1 {
             margin-top: 20px;
-            font-size: 1.8rem;  /* Ajuste del tamaño de letra */
+            font-size: 1.8rem;
         }
 
         h2 {
@@ -29,7 +29,6 @@
             color: #4CAF50;
         }
 
-        /* Contenedor principal */
         .container {
             display: flex;
             flex-direction: column;
@@ -39,14 +38,12 @@
             margin: 0 auto;
         }
 
-        /* Imagen del QR */
         #qrImage {
             margin-top: 20px;
             border: 5px solid #ddd;
             border-radius: 10px;
         }
 
-        /* Estilos del formulario */
         form {
             background-color: white;
             padding: 20px;
@@ -64,10 +61,6 @@
             color: #333;
         }
 
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
         input[type="number"], button {
             width: 100%;
             padding: 10px;
@@ -81,16 +74,27 @@
             color: white;
             font-size: 1rem;
             cursor: pointer;
+            border: none;
         }
 
         button:hover {
             background-color: #45a049;
         }
 
-        /* Estilos para pantallas pequeñas (móviles) */
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Hacer que solo el checkbox de "Almacenar contactos" sea más grande */
+        #storeContacts {
+            transform: scale(1.5); /* Solo afecta al checkbox de agregar contactos */
+            margin-right: 10px;
+        }
+
         @media screen and (max-width: 768px) {
             h1 {
-                font-size: 1.5rem; /* Ajuste del tamaño de letra para móviles */
+                font-size: 1.5rem;
             }
 
             form {
@@ -102,7 +106,6 @@
             }
         }
 
-        /* Estilos para pantallas grandes (escritorio) */
         @media screen and (min-width: 769px) {
             .container {
                 flex-direction: row;
@@ -119,6 +122,8 @@
             }
         }
     </style>
+    <!-- SweetAlert2 Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="container">
@@ -149,7 +154,13 @@
             <label for="standardDuration">Duración de Citas (en minutos):</label>
             <input type="number" id="standardDuration" name="standardDuration" value="15" step="5" required>
 
+            <!-- Checkbox para almacenar contactos con mayor visibilidad -->
+            <label><input type="checkbox" id="storeContacts" name="storeContacts" checked> Almacenar contactos</label>
+
             <button type="submit">Guardar Configuración</button>
+
+            <!-- Botón para exportar contactos -->
+            <button id="exportContacts" disabled>Exportar contactos a CSV</button>
         </form>
     </div>
 
@@ -157,52 +168,61 @@
         // Recargar la imagen del QR cada 30 segundos
         setInterval(() => {
             document.getElementById('qrImage').src = '/bot-qr?' + new Date().getTime();
-        }, 30000);  // Recargar cada 30 segundos
+        }, 30000);
 
-        // Cargar la configuración desde el backend y seleccionar los días en el formulario
         async function loadConfig() {
             try {
                 const response = await fetch('/get-config');
                 const config = await response.json();
                 console.log('Configuración cargada:', config);
 
-                // Marcar los días que están almacenados en config.json
                 const days = config.rangeLimit.days;
                 days.forEach(day => {
                     const checkbox = document.querySelector(`input[name="days"][value="${day}"]`);
                     if (checkbox) checkbox.checked = true;
                 });
 
-                // Cargar la hora de inicio, fin y duración de citas
                 document.getElementById('startHour').value = config.rangeLimit.startHour;
                 document.getElementById('endHour').value = config.rangeLimit.endHour;
-                document.getElementById('standardDuration').value = config.standardDuration * 60;  // Convertir a minutos
+                document.getElementById('standardDuration').value = config.standardDuration * 60;
+                document.getElementById('storeContacts').checked = config.storeContacts;
+
+                // Habilitar o deshabilitar el botón de exportar según el estado del checkbox
+                toggleExportButton(config.storeContacts);
             } catch (err) {
                 console.error('Error al cargar la configuración:', err);
             }
         }
 
-        // Cargar la configuración cuando la página se carga
-        window.onload = loadConfig;
+        // Habilitar o deshabilitar el botón de exportar según el estado del checkbox
+        function toggleExportButton(storeContacts) {
+            const exportButton = document.getElementById('exportContacts');
+            if (storeContacts) {
+                exportButton.disabled = false;
+            } else {
+                exportButton.disabled = true;
+            }
+        }
 
-        // Manejar el formulario y enviar los datos actualizados
+        // Manejar el cambio de estado del checkbox para habilitar/deshabilitar el botón de exportar
+        document.getElementById('storeContacts').addEventListener('change', function() {
+            toggleExportButton(this.checked);
+        });
+
         document.getElementById('configForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Obtener los días seleccionados
             const days = Array.from(document.querySelectorAll('input[name="days"]:checked')).map(cb => Number(cb.value));
-
-            // Obtener los otros valores
             const startHour = Number(document.getElementById('startHour').value);
             const endHour = Number(document.getElementById('endHour').value);
-            const standardDuration = Number(document.getElementById('standardDuration').value);  // Duración en minutos
+            const standardDuration = Number(document.getElementById('standardDuration').value);
+            const storeContacts = document.getElementById('storeContacts').checked;
 
             const configData = { 
                 rangeLimit: { days, startHour, endHour }, 
-                standardDuration 
+                standardDuration,
+                storeContacts
             };
-
-            console.log('Datos enviados:', configData);  // Verificar en consola
 
             try {
                 const response = await fetch('/save-config', {
@@ -214,16 +234,47 @@
                 });
 
                 if (response.ok) {
-                    alert('Configuración guardada exitosamente');
-                    console.log('Respuesta del servidor:', await response.text());  // Mostrar respuesta del servidor
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: 'Configuración guardada exitosamente',
+                        icon: 'success',
+                        confirmButtonColor: '#4CAF50'
+                    });
                 } else {
-                    alert('Error al guardar la configuración');
-                    console.error('Error:', response.statusText);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un problema al guardar la configuración',
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
                 }
             } catch (err) {
-                console.error('Error en la solicitud:', err);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error en la solicitud',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
             }
         });
+
+        document.getElementById('exportContacts').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/export-contacts');
+                const csv = await response.text();
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'contacts.csv';
+                a.click();
+            } catch (err) {
+                console.error('Error al exportar contactos:', err);
+            }
+        });
+
+        // Cargar configuración al iniciar la página
+        window.onload = loadConfig;
     </script>
 </body>
 </html>
