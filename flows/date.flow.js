@@ -51,24 +51,6 @@ const confirmationFlow = addKeyword(EVENTS.ACTION)
             }
         });
 
-const firstavailabilityOld = addKeyword(EVENTS.ACTION)
-.addAnswer("Revisando disponibilidad...",null,
-    async (ctx, ctxFn) => {
-        const nextdateAvailable = await getNextAvailableSlot(new Date);
-        await ctxFn.flowDynamic("la cita mas proxima es en esta fecha y hora :");
-        const year = nextdateAvailable.start.getFullYear();
-        const month = String(nextdateAvailable.start.getMonth() + 1).padStart(2, '0'); 
-        const day = String(nextdateAvailable.start.getDate()).padStart(2, '0');
-        const hour = nextdateAvailable.start.getHours();
-        const min = nextdateAvailable.start.getMinutes();
-        const minutes= (min < 10 ? '0' : '') + min;
-        const dateString = `${day}/${month}/${year} ${hour}:${minutes}`;
-        await ctxFn.flowDynamic(dateString);
-        await ctxFn.state.update({ date: nextdateAvailable.start });
-        return ctxFn.gotoFlow(confirmationFlow);
-    });
-    
-
 
 let horas=[];
 let Hours="";
