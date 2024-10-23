@@ -54,6 +54,17 @@ async function randomWait() {
     const delay = Math.random() * 1000 + 1000;  // Espera entre 1 y 2 segundos
     return new Promise(resolve => setTimeout(resolve, delay));
 }
+function formatHour(hour) {
+    if (hour === 12) {
+        return "12:00 PM";  // Las 12 se formatean como 12 PM
+    } else if (hour === 0) {
+        return "12:00 AM";  // Las 0 se formatean como 12 AM (medianoche)
+    } else if (hour < 12) {
+        return `${hour}:00 AM`;  // Para horas menores a las 12
+    } else {
+        return `${hour - 12}:00 PM`;  // Para horas mayores a las 12
+    }
+}
 
 async function text2iso(text) {
     const currentDate = new Date();
@@ -71,4 +82,4 @@ async function text2iso(text) {
     return response.trim();  
 }
 
-module.exports = { text2iso, iso2text, convertToDate, isMorning, isAfternoon, isValidDate, isFutureDate, validarCorreo, randomWait, clientName };
+module.exports = { text2iso, iso2text, convertToDate, isMorning, isAfternoon, isValidDate, isFutureDate, validarCorreo, randomWait, clientName,formatHour };

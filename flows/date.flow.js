@@ -1,9 +1,45 @@
 const { addKeyword, EVENTS } = require("@bot-whatsapp/bot");
-const { text2iso, iso2text, convertToDate, isAfternoon, isMorning, isValidDate, isFutureDate } = require("../scripts/utils");
+const { text2iso, iso2text, convertToDate, isAfternoon, isMorning, isValidDate, isFutureDate,formatHour } = require("../scripts/utils");
 const { isDateAvailable, getNextAvailableSlot,getNextEventsByPhoneNumber,deleteAppointmentById } = require("../scripts/calendar");
 const { formFlow } = require("./form.flow");
+const fs = require('fs');
+const path = require('path');
 
 let response = "";
+
+function loadConfig() {
+    const configPath = path.join(__dirname, '..', 'config.json');
+    let config;
+    console.log('Config............')
+    try {
+        const configData = fs.readFileSync(configPath, 'utf-8');  // Leer el archivo JSON
+        config = JSON.parse(configData);  // Convertir el JSON a objeto
+
+        const requiredFields = ['rangeLimit', 'standardDuration', 'timeZone', 'calendarID', 'dateLimit'];
+        requiredFields.forEach(field => {
+            if (!config[field]) {
+                throw new Error(`Falta el valor requerido: ${field} en config.json`);
+            }
+        });
+
+        if (!config.rangeLimit.days || !config.rangeLimit.startHour || !config.rangeLimit.endHour) {
+            throw new Error('Faltan valores en rangeLimit en config.json');
+        }
+    } catch (err) {
+        console.error('Error al cargar el archivo config.json:', err);
+
+        config = {
+            rangeLimit: { days: [1, 2, 3, 4, 5], startHour: 9, endHour: 18 },
+            standardDuration: 0.25,
+            timeZone: 'America/Mexico_City',
+            calendarID: '447290a939b1187df79c01c644393dfcfc343a77cb5361acb359af631447002c@group.calendar.google.com',
+            dateLimit: 10
+        };
+        console.log('Usando configuración por defecto:', config);
+    }
+
+    return config;
+}
 
 const confirmationFlow = addKeyword(EVENTS.ACTION)
     .addAnswer("Confirmas la fecha propuesta? Responde unicamente con *si* o *no*", { capture: true },
@@ -15,7 +51,7 @@ const confirmationFlow = addKeyword(EVENTS.ACTION)
             }
         });
 
-const firstavailability = addKeyword(EVENTS.ACTION)
+const firstavailabilityOld = addKeyword(EVENTS.ACTION)
 .addAnswer("Revisando disponibilidad...",null,
     async (ctx, ctxFn) => {
         const nextdateAvailable = await getNextAvailableSlot(new Date);
@@ -31,8 +67,73 @@ const firstavailability = addKeyword(EVENTS.ACTION)
         await ctxFn.state.update({ date: nextdateAvailable.start });
         return ctxFn.gotoFlow(confirmationFlow);
     });
+    
+
+
+let horas=[];
+let Hours="";
+
+const firstavailability = addKeyword(EVENTS.ACTION)
+.addAnswer("Revisando disponibilidad...",null,
+    async (ctx, ctxFn) => {
+        const config =  loadConfig();
+        console.log('config: ',config)
+        const horaInicial =config['rangeLimit']['startHour']
+        const horaFinal =config['rangeLimit']['endHour']
+    
+        const hours = [];
+        console.log('hour:  ',hours);
+        console.log('horaInicial:  ',horaInicial);
+        console.log('horaFinal:  ',horaFinal);
+        for (let hour = horaInicial; hour < horaFinal; hour++) { 
+            console.log('hour:  ',hour);
+        hours.push(hour);
+        }
+
+        let message = "Elige una hora para empezar a buscar citas:\n";
+
+        console.log('hours:  ',hours)
+        hours.forEach((hour, index) => {
+            const formattedHour = formatHour(hour)
+            console.log('formattedHour:  ',formattedHour)
+            // const formattedHour = hour < 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
+            message += `responde *${index + 1}* para buscar a partir de las ${formattedHour}\n`;
+        });
+        horas=hours;
+        await ctxFn.state.update({ hours });
+        return await ctxFn.flowDynamic(message , { capture: true });
+    })
+// .addAnswer(message)
+.addAnswer("Esperando la selección de la hora...", { capture: true },
+    async (ctx, ctxFn) => {
+        const hourIndex= ctx.body;
+        console.log('hourIndex:',hourIndex)
+        console.log('ctxFn.state.get():',ctxFn.state.get())
+        const  hours  = horas;
+        console.log('hours:',hours)
+        const hora = hours[hourIndex-1];
+
+        let nextdateAvailable = await getNextAvailableSlot(new Date);
+        
+        while (((nextdateAvailable.start.getHours()*60)+nextdateAvailable.start.getMinutes()) < (hora*60) ) {
+                       
+            nextdateAvailable = await getNextAvailableSlot(nextdateAvailable.start);
+        }
+        await ctxFn.flowDynamic("la cita mas proxima es en esta fecha y hora :");
+        const year = nextdateAvailable.start.getFullYear();
+        const month = String(nextdateAvailable.start.getMonth() + 1).padStart(2, '0'); 
+        const day = String(nextdateAvailable.start.getDate()).padStart(2, '0');
+        const hour = nextdateAvailable.start.getHours();
+        const min = nextdateAvailable.start.getMinutes();
+        const minutes= (min < 10 ? '0' : '') + min;
+        const dateString = `${day}/${month}/${year} ${hour}:${minutes}`;
+        await ctxFn.flowDynamic(dateString);
+        await ctxFn.state.update({ date: nextdateAvailable.start });
+        return ctxFn.gotoFlow(confirmationFlow);
+    });
 
 let requestedDate = null; 
+
 const specificDateFlow = addKeyword(EVENTS.ACTION)   
     .addAnswer("Por favor, escribe la fecha que deseas agendar en el formato *DD/MM/AAAA*, por ejemplo *01/02/2024*.", { capture: true },
         async (ctx, ctxFn) => {
@@ -51,24 +152,46 @@ const specificDateFlow = addKeyword(EVENTS.ACTION)
                 return ctxFn.fallBack("La fecha proporcionada ya ha pasado. Por favor, ingresa una fecha futura.");
             }
 
-            return ctxFn.flowDynamic("¿Prefieres la cita por la *mañana* o por la *tarde*? Responde con *mañana* o *tarde*.");
+            // Aquí replicamos la lógica para mostrar las horas disponibles
+            const config = await loadConfig();
+            const horaInicial = config['rangeLimit']['startHour'];
+            const horaFinal = config['rangeLimit']['endHour'];
+
+            const hours = [];
+            for (let hour = horaInicial; hour < horaFinal; hour++) { 
+                hours.push(hour);
+            }
+
+            let message = "Elige una hora para empezar a buscar citas:\n";
+            hours.forEach((hour, index) => {
+                const formattedHour = formatHour(hour);
+                message += `responde *${index + 1}* para buscar a partir de las ${formattedHour}\n`;
+            });
+
+            // Guardamos las horas en el estado para usarlas después
+            horas=hours;
+            await ctxFn.state.update({ hours });
+            return await ctxFn.flowDynamic(message, { capture: true });
         })
-    .addAnswer("Esperando la respuesta de mañana o tarde...", { capture: true },
+    .addAnswer("Esperando la selección de la hora...", { capture: true },
         async (ctx, ctxFn) => {
-            const preference = ctx.body.toLowerCase();
-            if (preference !== "mañana" && preference !== "tarde") {
-                return ctxFn.fallBack("Por favor, responde con *mañana* o *tarde*.");
+            // Recuperar las horas desde el estado
+            // const { hours } = await ctxFn.state.get();
+            const  hours  = horas;
+            const hourIndex = parseInt(ctx.body.trim()) - 1;
+
+            // Validar que el índice seleccionado sea válido
+            if (isNaN(hourIndex) || hourIndex < 0 || hourIndex >= hours.length) {
+                return ctxFn.fallBack("Por favor, selecciona una hora válida.");
             }
 
-            if (!requestedDate || !isValidDate(requestedDate)) {
-                return ctxFn.fallBack("Ha ocurrido un error con la fecha. Por favor, vuelve a ingresar la fecha.");
-            }
-
-            const isPreferredTime = preference === "mañana" ? isMorning : isAfternoon;
+            const selectedHour = hours[hourIndex];
+            requestedDate.setHours(selectedHour, 0, 0, 0);  // Ajustar la hora seleccionada en la fecha proporcionada
 
             let nextAvailable = await getNextAvailableSlot(requestedDate);
 
-            while (!isPreferredTime(nextAvailable.start)) {
+            // Continuar buscando el siguiente slot disponible si la hora es anterior
+            while (((nextAvailable.start.getHours() * 60) + nextAvailable.start.getMinutes()) < (selectedHour * 60)) {
                 nextAvailable = await getNextAvailableSlot(nextAvailable.start);
             }
 
@@ -79,8 +202,9 @@ const specificDateFlow = addKeyword(EVENTS.ACTION)
             const min = String(nextAvailable.start.getMinutes()).padStart(2, '0');
             const dateString = `${day}/${month}/${year} ${hour}:${min}`;
 
-            await ctxFn.flowDynamic(`La primera cita disponible por la ${preference} es: ${dateString}`);
+            await ctxFn.flowDynamic(`La cita más próxima es en esta fecha y hora: ${dateString}`);
             await ctxFn.state.update({ date: nextAvailable.start });
+
             return ctxFn.gotoFlow(confirmationFlow);
         });
 
